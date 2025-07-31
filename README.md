@@ -1,93 +1,140 @@
 # Adjustable Spatio-Spectral Hyperspectral Image Compression Network
+This repository contains code of the paper [`Adjustable Spatio-Spectral Hyperspectral Image Compression Network`](https://arxiv.org/abs/TODO) submitted to IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing (Special Section: Al for Remote Sensing). This work has been done at the [Remote Sensing Image Analysis group](https://rsim.berlin/) by [Martin Hermann Paul Fuchs](https://rsim.berlin/team/members/martin-hermann-paul-fuchs), [Behnood Rasti](https://rsim.berlin/team/members/behnood-rasti) and [Begüm Demir](https://rsim.berlin/team/members/begum-demir).
 
+If you use this code, please cite our paper given below:
 
-
-## Getting started
-
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+> M. H. P. Fuchs, B. Rasti and B. Demіr, "[Adjustable Spatio-Spectral Hyperspectral Image Compression Network](https://arxiv.org/abs/TODO)", IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, 2025, under review.
 
 ```
-cd existing_repo
-git remote add origin https://git.tu-berlin.de/rsim/hycass.git
-git branch -M main
-git push -uf origin main
+@article{Fuchs:2024,
+    author={M. H. P. {Fuchs}, B. {Rasti} and B. {Demіr}},
+    journal={IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing}, 
+    title={Adjustable Spatio-Spectral Hyperspectral Image Compression Network}, 
+    year={2025, under review}
+}
 ```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://git.tu-berlin.de/rsim/hycass/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
+This repository contains code that has been adapted from the CompressAI [\[2\]](#2-compressai) framework https://github.com/InterDigitalInc/CompressAI/.
 
 ## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+With the rapid growth of hyperspectral data archives in remote sensing (RS), the need for efficient storage has become essential, driving significant attention toward learning-based hyperspectral image (HSI) compression. However, a comprehensive investigation of the individual and joint effects of spectral and spatial compression on learning-based HSI compression has not been thoroughly examined yet. Conducting such an analysis is crucial for understanding how the exploitation of spectral, spatial, and joint spatio-spectral redundancies affects HSI compression. To address this issue, we propose Adjustable Spatio-Spectral Hyperspectral Image Compression Network (HyCASS), a learning-based model designed for adjustable HSI compression in both spectral and spatial dimensions. HyCASS consists of six main modules: 1) spectral encoder; 2) spatial encoder; 3) compression ratio (CR) adapter encoder; 4) CR adapter decoder; 5) spatial decoder; and 6) spectral decoder module. The modules employ convolutional layers and transformer blocks to capture both short-range and long-range redundancies. Experimental results on two HSI benchmark datasets demonstrate the effectiveness of our proposed adjustable model compared to existing learning-based compression models. Based on our results, we establish a guideline for effectively balancing spectral and spatial compression across different CRs, taking into account the spatial resolution of the HSIs. Our code and pre-trained model weights are publicly available at https://git.tu-berlin.de/rsim/hycass.
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+## Setup
+The code in this repository is tested with `Ubuntu 22.04 LTS` and `Python 3.13.2`.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+### Dependencies
+All dependencies are listed in the [`requirements.txt`](requirements.txt) and can be installed via the following command:
+```
+pip install -r requirements.txt
+```
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+### Datasets
+
+#### HySpecNet-11k
+Follow the instructions on https://hyspecnet.rsim.berlin to download, extract and preprocess the HySpecNet-11k dataset.
+
+#### MLRetSet
+Go to https://www.doi.org/10.17605/OSF.IO/H2T8U to download the MLRetSet dataset, then unzip the archives and create the split files using [`datasets/mlretset-split-creation.ipynb`](datasets/mlretset-split-creation.ipynb).
 
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+### Train
+The [`train.py`](train.py) expects the following command line arguments:
+| Parameter | Description | Default |
+| :- | :- | :- |
+| `--devices` | Devices to use, e.g. `cpu` or `0` or `0,2,5,7` | `0` |
+| `--train-batch-size` | Training batch size | `2` |
+| `--val-batch-size` | Validation batch size | `2` |
+| `-n` | Data loaders threads | `4` |
+| `-d` | Path to dataset | `./datasets/hyspecnet-11k/` |
+| `--mode` | Dataset split difficulty | `easy` |
+| `--transform` | Dataset transformation, e.g. `random_16x16` | `None` |
+| `-m` | Model architecture | `hycass_cr202_spatial2x_n128` |
+| `--loss` | Loss | `mse` |
+| `-e` | Number of epochs | `200` |
+| `-lr` | Learning rate | `1e-4` |
+| `--save-dir` | Directory to save results | `./results/` |
+| `--experiment-name` | Name of experiment | `trial` |
+| `--seed` | Set random seed for reproducibility | `10587` |
+| `--clip-max-norm` | Gradient clipping max norm | `1.0` |
+| `--checkpoint` | Path to a checkpoint to resume training | `None` |
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+Specify the parameters in the [`train.sh`](train.sh) file and then execute the following command:
+```console
+./train.sh
+```
+Or run the python code directly through the console:
+```console
+python train.py \
+    --devices 0 \
+    --train-batch-size 16 \
+    --val-batch-size 16 \
+    --num-workers 4 \
+    --learning-rate 1e-4 \
+    --mode easy \
+    --model hycass_cr202_spatial2x_n128 \
+    --loss mse \
+    --epochs 200
+```
+### Test
+The test is automatically executed after training.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+## Pre-Trained Weights
+Pre-trained weights are publicly available and should be downloaded into the [`./results/weights/`](results/weights/) folder.
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+| Method | Model | Compression Ratio | PSNR | Download Link |
+| :----- | :---- | :--- | :--- | :------------ |
+| 1D-CAE [\[3\]](#3-1d-convolutional-autoencoder-1d-cae) | `cae1d_cr32` | 28.86 | 48.95 dB | [cae1d_1bpppc.pth.tar](https://tubcloud.tu-berlin.de/s/ew2jr67yro7cj3x/download/cae1d_1bpppc.pth.tar) |
+| | `cae1d_cr16` | 15.54 | 52.38 dB | [cae1d_2bpppc.pth.tar](https://tubcloud.tu-berlin.de/s/Ae35EBRado8QSmk/download/cae1d_2bpppc.pth.tar) |
+| | `cae1d_cr8` | 7.77 | 53.90 dB | [cae1d_4bpppc.pth.tar](https://tubcloud.tu-berlin.de/s/ZNeXycsssRdYZ5m/download/cae1d_4bpppc.pth.tar) |
+| | `cae1d_cr4` | 3.96 | 54.85 dB | [cae1d_8bpppc.pth.tar](https://tubcloud.tu-berlin.de/s/GpmXDAWEeo2nG5w/download/cae1d_8bpppc.pth.tar) |
+| SSCNet [\[4\]](#4-spectral-signals-compressor-network-sscnet) | `sscnet_cr32` | 32.00 | 43.24 dB | [sscnet_1bpppc.pth.tar](https://tubcloud.tu-berlin.de/s/wPwbMKYJAmXxLRX/download/sscnet_1bpppc.pth.tar) |
+| | `sscnet_cr16` | 15.84 | 43.60 dB | [sscnet_2bpppc.pth.tar](https://tubcloud.tu-berlin.de/s/H9Yg8n8rzxGMe2Z/download/sscnet_2bpppc.pth.tar) |
+| | `sscnet_cr8` | 8.00 | 43.69 dB | [sscnet_4bpppc.pth.tar](https://tubcloud.tu-berlin.de/s/WQ65aCDxgedQYxZ/download/sscnet_4bpppc.pth.tar) |
+| | `sscnet_cr4` | 3.96 | 43.29 dB | [sscnet_8bpppc.pth.tar](https://tubcloud.tu-berlin.de/s/5kiQ8ZLRnkpbSg6/download/sscnet_8bpppc.pth.tar) |
+| 3D-CAE [\[5\]](#5-3d-convolutional-auto-encoder-3d-cae) | `cae3d_cr32` | 31.69 | 39.06 dB | [cae3d_1bpppc.pth.tar](https://tubcloud.tu-berlin.de/s/QDfARfWL3Pab3xK/download/cae3d_1bpppc.pth.tar) |
+| | `cae3d_cr16` | 15.84 | 39.54 dB | [cae3d_2bpppc.pth.tar](https://tubcloud.tu-berlin.de/s/dD3qtjrgzJxmymP/download/cae3d_2bpppc.pth.tar) |
+| | `cae3d_cr8` | 7.92 | 39.69 dB | [cae3d_4bpppc.pth.tar](https://tubcloud.tu-berlin.de/s/CmTdQzcE3x9pEEJ/download/cae3d_4bpppc.pth.tar) |
+| | `cae3d_cr4` | 3.96 | 39.94 dB | [cae3d_8bpppc.pth.tar](https://tubcloud.tu-berlin.de/s/DpqKJdMbojF3CLx/download/cae3d_8bpppc.pth.tar) |
+| HyCoT | `hycot_cr32` | 28.86 | 50.26 dB | [hycot_cr32.pth.tar](https://tubcloud.tu-berlin.de/s/QsT3An5WTPbDXQS/download/hycot_cr32.pth.tar) |
+| | `hycot_cr16` | 15.54 | 53.20 dB | [hycot_cr16.pth.tar](https://tubcloud.tu-berlin.de/s/5jGeG29kTJfHX58/download/hycot_cr16.pth.tar) |
+| | `hycot_cr8` | 7.77 | 55.38 dB | [hycot_cr8.pth.tar](https://tubcloud.tu-berlin.de/s/As8yaM3k2isjX92/download/hycot_cr8.pth.tar) |
+| | `hycot_cr4` | 3.96 | 56.29 dB | [hycot_cr4.pth.tar](https://tubcloud.tu-berlin.de/s/jeaSXYQHN7ki3mE/download/hycot_cr4.pth.tar) |
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+## Authors
+**Martin Hermann Paul Fuchs**
+https://rsim.berlin/team/members/martin-hermann-paul-fuchs
 
 ## License
-For open source projects, say how it is licensed.
+The code in this repository is licensed under the **MIT License**:
+```
+MIT License
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+Copyright (c) 2025 Martin Hermann Paul Fuchs
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+## References
+### [2] [CompressAI](https://doi.org/10.48550/arXiv.2011.03029)
+
+### [3] [1D-Convolutional Autoencoder (1D-CAE)](https://doi.org/10.5194/isprs-archives-XLIII-B1-2021-15-2021)
+
+### [4] [Spectral Signals Compressor Network (SSCNet)](https://doi.org/10.3390/rs14102472)
+
+### [5] [3D Convolutional Auto-Encoder (3D-CAE)](https://doi.org/10.1117/1.JEI.30.4.041403)
