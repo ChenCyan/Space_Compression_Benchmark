@@ -3,14 +3,14 @@ This repository contains code of the paper [`Adjustable Spatio-Spectral Hyperspe
 
 If you use this code, please cite our paper given below:
 
-> M. H. P. Fuchs, B. Rasti and B. Demіr, "[Adjustable Spatio-Spectral Hyperspectral Image Compression Network](https://arxiv.org/abs/2507.23447)", IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, 2025, under review.
+> M. H. P. Fuchs, B. Rasti and B. Demіr, "[Adjustable Spatio-Spectral Hyperspectral Image Compression Network](https://arxiv.org/abs/2507.23447)", arXiv preprint arXiv:2507.23447 (2025).
 
 ```
-@article{Fuchs:2025,
-    author={M. H. P. {Fuchs}, B. {Rasti} and B. {Demіr}},
-    journal={IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing}, 
-    title={Adjustable Spatio-Spectral Hyperspectral Image Compression Network}, 
-    year={2025, under review}
+@article{fuchs2025adjustable,
+  title={Adjustable Spatio-Spectral Hyperspectral Image Compression Network},
+  author={Fuchs, Martin Hermann Paul and Rasti, Behnood and Demir, Beg{\"u}m},
+  journal={arXiv preprint arXiv:2507.23447},
+  year={2025}
 }
 ```
 This repository contains code that has been adapted from the CompressAI framework https://github.com/InterDigitalInc/CompressAI/.
