@@ -170,6 +170,12 @@ def hycass_cr1476_spatial2x_n128(src_channels=369, img_size=(96, 96)):
 def hycass_cr1476_spatial3x_n128(src_channels=369, img_size=(96, 96)):
     return AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(src_channels=src_channels, img_size=img_size, cr_target=1476, stages_spatial=3, N=128)
 
+# CR = 1776 (Berlin-Urban-Gradient)
+def hycass_cr1776_spatial2x_n128(src_channels=111, img_size=(80, 80)):
+    return AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(src_channels, img_size, cr_target=1_776, stages_spatial=2, N=128)
+def hycass_cr1776_spatial3x_n128(src_channels=111, img_size=(80, 80)):
+    return AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(src_channels, img_size, cr_target=1_776, stages_spatial=3, N=128)
+
 
 class AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(nn.Module):
     def __init__(self,

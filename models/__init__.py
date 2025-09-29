@@ -138,4 +138,7 @@ models = {
     "hycass_cr1476_spatial2x_n128": hycass.hycass_cr1476_spatial2x_n128,
     "hycass_cr1476_spatial3x_n128": hycass.hycass_cr1476_spatial3x_n128,
 
+    "hycass_cr1776_spatial2x_n128": hycass.hycass_cr1776_spatial2x_n128,
+    "hycass_cr1776_spatial3x_n128": hycass.hycass_cr1776_spatial3x_n128,
+
 }
