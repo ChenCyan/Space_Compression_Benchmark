@@ -104,6 +104,14 @@ def hycass_cr202_spatial2x_n128(src_channels=202, img_size=(128, 128)):
 def hycass_cr202_spatial3x_n128(src_channels=202, img_size=(128, 128)):
     return AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(src_channels=src_channels, img_size=img_size, cr_target=202, stages_spatial=3, N=128)
 
+# CR = 222 (Berlin-Urban-Gradient)
+def hycass_cr222_spatial1x_n128(src_channels=111, img_size=(80, 80)):
+    return AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(src_channels, img_size, cr_target=222, stages_spatial=1, N=128)
+def hycass_cr222_spatial2x_n128(src_channels=111, img_size=(80, 80)):
+    return AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(src_channels, img_size, cr_target=222, stages_spatial=2, N=128)
+def hycass_cr222_spatial3x_n128(src_channels=111, img_size=(80, 80)):
+    return AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(src_channels, img_size, cr_target=222, stages_spatial=3, N=128)
+
 # CR = 369 (MLRetSet)
 def hycass_cr369_spatial0x_n1024(src_channels=369, img_size=(96, 96)):
     return AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(src_channels=src_channels, img_size=img_size, cr_target=369, stages_spatial=0, N=1_024)
@@ -122,6 +130,14 @@ def hycass_cr404_spatial2x_n128(src_channels=202, img_size=(128, 128)):
 def hycass_cr404_spatial3x_n128(src_channels=202, img_size=(128, 128)):
     return AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(src_channels=src_channels, img_size=img_size, cr_target=404, stages_spatial=3, N=128)
 
+# CR = 444 (Berlin-Urban-Gradient)
+def hycass_cr444_spatial1x_n128(src_channels=111, img_size=(80, 80)):
+    return AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(src_channels, img_size, cr_target=444, stages_spatial=1, N=128)
+def hycass_cr444_spatial2x_n128(src_channels=111, img_size=(80, 80)):
+    return AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(src_channels, img_size, cr_target=444, stages_spatial=2, N=128)
+def hycass_cr444_spatial3x_n128(src_channels=111, img_size=(80, 80)):
+    return AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(src_channels, img_size, cr_target=444, stages_spatial=3, N=128)
+
 # CR = 738 (MLRetSet)
 def hycass_cr738_spatial1x_n128(src_channels=369, img_size=(96, 96)):
     return AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(src_channels=src_channels, img_size=img_size, cr_target=738, stages_spatial=1, N=128)
@@ -139,6 +155,12 @@ def hycass_cr808_spatial3x_n128(src_channels=202, img_size=(128, 128)):
     return AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(src_channels=src_channels, img_size=img_size, cr_target=808, stages_spatial=3, N=128)
 def hycass_cr808_spatial4x_n128(src_channels=202, img_size=(128, 128)):
     return AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(src_channels=src_channels, img_size=img_size, cr_target=808, stages_spatial=4, N=128)
+
+# CR = 888 (Berlin-Urban-Gradient)
+def hycass_cr888_spatial2x_n128(src_channels=111, img_size=(80, 80)):
+    return AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(src_channels, img_size, cr_target=888, stages_spatial=2, N=128)
+def hycass_cr888_spatial3x_n128(src_channels=111, img_size=(80, 80)):
+    return AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(src_channels, img_size, cr_target=888, stages_spatial=3, N=128)
 
 # CR = 1476 (MLRetSet)
 def hycass_cr1476_spatial1x_n128(src_channels=369, img_size=(96, 96)):

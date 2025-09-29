@@ -75,6 +75,10 @@ models = {
     "hycass_cr032_spatial2x_n128": hycass.hycass_cr032_spatial2x_n128,
     "hycass_cr032_spatial3x_n128": hycass.hycass_cr032_spatial3x_n128,
 
+    "hycass_cr037_spatial1x_n128": hycass.hycass_cr037_spatial1x_n128,
+    "hycass_cr037_spatial2x_n128": hycass.hycass_cr037_spatial2x_n128,
+    "hycass_cr037_spatial3x_n128": hycass.hycass_cr037_spatial3x_n128,
+
     "hycass_cr050_spatial0x_n1024": hycass.hycass_cr050_spatial0x_n1024,
     "hycass_cr050_spatial1x_n128": hycass.hycass_cr050_spatial1x_n128,
     "hycass_cr050_spatial2x_n128": hycass.hycass_cr050_spatial2x_n128,
@@ -105,6 +109,10 @@ models = {
     "hycass_cr202_spatial2x_n128": hycass.hycass_cr202_spatial2x_n128,
     "hycass_cr202_spatial3x_n128": hycass.hycass_cr202_spatial3x_n128,
 
+    "hycass_cr222_spatial1x_n128": hycass.hycass_cr222_spatial1x_n128,
+    "hycass_cr222_spatial2x_n128": hycass.hycass_cr222_spatial2x_n128,
+    "hycass_cr222_spatial3x_n128": hycass.hycass_cr222_spatial3x_n128,
+
     "hycass_cr369_spatial0x_n1024": hycass.hycass_cr369_spatial0x_n1024,
     "hycass_cr369_spatial1x_n128": hycass.hycass_cr369_spatial1x_n128,
     "hycass_cr369_spatial2x_n128": hycass.hycass_cr369_spatial2x_n128,
@@ -122,6 +130,9 @@ models = {
     "hycass_cr808_spatial2x_n128": hycass.hycass_cr808_spatial2x_n128,
     "hycass_cr808_spatial3x_n128": hycass.hycass_cr808_spatial3x_n128,
     "hycass_cr808_spatial4x_n128": hycass.hycass_cr808_spatial4x_n128,
+
+    "hycass_cr888_spatial2x_n128": hycass.hycass_cr888_spatial2x_n128,
+    "hycass_cr888_spatial3x_n128": hycass.hycass_cr888_spatial3x_n128,
 
     "hycass_cr1476_spatial1x_n128": hycass.hycass_cr1476_spatial1x_n128,
     "hycass_cr1476_spatial2x_n128": hycass.hycass_cr1476_spatial2x_n128,

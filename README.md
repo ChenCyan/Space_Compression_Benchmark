@@ -16,7 +16,8 @@ If you use this code, please cite our paper given below:
 This repository contains code that has been adapted from the CompressAI framework https://github.com/InterDigitalInc/CompressAI/.
 
 ## Description
-With the rapid growth of hyperspectral data archives in remote sensing (RS), the need for efficient storage has become essential, driving significant attention toward learning-based hyperspectral image (HSI) compression. However, a comprehensive investigation of the individual and joint effects of spectral and spatial compression on learning-based HSI compression has not been thoroughly examined yet. Conducting such an analysis is crucial for understanding how the exploitation of spectral, spatial, and joint spatio-spectral redundancies affects HSI compression. To address this issue, we propose Adjustable Spatio-Spectral Hyperspectral Image Compression Network (HyCASS), a learning-based model designed for adjustable HSI compression in both spectral and spatial dimensions. HyCASS consists of six main modules: 1) spectral encoder; 2) spatial encoder; 3) compression ratio (CR) adapter encoder; 4) CR adapter decoder; 5) spatial decoder; and 6) spectral decoder module. The modules employ convolutional layers and transformer blocks to capture both short-range and long-range redundancies. Experimental results on two HSI benchmark datasets demonstrate the effectiveness of our proposed adjustable model compared to existing learning-based compression models. Based on our results, we establish a guideline for effectively balancing spectral and spatial compression across different CRs, taking into account the spatial resolution of the HSIs. Our code and pre-trained model weights are publicly available at https://git.tu-berlin.de/rsim/hycass.
+With the rapid growth of hyperspectral data archives in remote sensing (RS), the need for efficient storage has become essential, driving significant attention toward learning-based hyperspectral image (HSI) compression. However, a comprehensive investigation of the individual and joint effects of spectral and spatial compression on learning-based HSI compression has not been thoroughly examined yet. Conducting such an analysis is crucial for understanding how the exploitation of spectral, spatial, and joint spatio-spectral redundancies affects HSI compression. To address this issue, we propose Adjustable Spatio-Spectral Hyperspectral Image Compression Network (HyCASS), a learning-based model designed for adjustable HSI compression in both spectral and spatial dimensions. HyCASS consists of six main modules: 1) spectral encoder module; 2) spatial encoder module; 3) compression ratio (CR) adapter encoder module; 4) CR adapter decoder module; 5) spatial decoder module; and 6) spectral decoder module. The modules employ convolutional layers and transformer blocks to capture both short-range and long-range redundancies. Experimental results on three HSI benchmark datasets demonstrate the effectiveness of our proposed adjustable model compared to existing learning-based compression models, surpassing the state of the art by
+up to 2.36 dB in terms of PSNR. Based on our results, we establish a guideline for effectively balancing spectral and spatial compression across different CRs, taking into account the spatial resolution of the HSIs. Our code and pre-trained model weights are publicly available at https://git.tu-berlin.de/rsim/hycass.
 
 ## Setup
 The code in this repository is tested with `Ubuntu 22.04 LTS` and `Python 3.13.2`.
@@ -31,6 +32,9 @@ pip install -r requirements.txt
 
 #### HySpecNet-11k
 Follow the instructions on https://hyspecnet.rsim.berlin to download, extract and preprocess the HySpecNet-11k dataset.
+
+### Berlin-Urban-Gradient
+Go to https://box.hu-berlin.de/f/e4fa78c198bc4d868d30/?dl=1 to download the Berlin-Urban-Gradient dataset, then unzip the archive. Split the tile into patches using [`berlinurbangradient-patchify.ipynb`](datasets/berlinurbangradient-patchify.ipynb) and create the split files using [`datasets/mlretset-split-creation.ipynb`](datasets/berlinurbangradient-split-creation.ipynb).
 
 #### MLRetSet
 Go to https://www.doi.org/10.17605/OSF.IO/H2T8U to download the MLRetSet dataset, then unzip the archives and create the split files using [`datasets/mlretset-split-creation.ipynb`](datasets/mlretset-split-creation.ipynb).
@@ -82,10 +86,13 @@ The test is automatically executed after training.
 Pre-trained weights are publicly available.
 
 ### HySpecNet-11k
-https://tubcloud.tu-berlin.de/s/wpkWjZqS2mPq99M
+https://tubcloud.tu-berlin.de/s/WYJMqZ9TZqySSrt
+
+### Berlin-Urban-Gradient
+https://tubcloud.tu-berlin.de/s/2LDG47Zzcy529eG
 
 ### MLRetSet
-https://tubcloud.tu-berlin.de/s/FiHJcH9DGSsP222
+https://tubcloud.tu-berlin.de/s/D4ePyZS6nZ3cozd
 
 ## Authors
 **Martin Hermann Paul Fuchs**
