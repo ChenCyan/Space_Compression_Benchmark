@@ -33,7 +33,7 @@ pip install -r requirements.txt
 #### HySpecNet-11k
 Follow the instructions on https://hyspecnet.rsim.berlin to download, extract and preprocess the HySpecNet-11k dataset.
 
-### Berlin-Urban-Gradient
+#### Berlin-Urban-Gradient
 Go to https://box.hu-berlin.de/f/e4fa78c198bc4d868d30/?dl=1 to download the Berlin-Urban-Gradient dataset, then unzip the archive. Split the tile into patches using [`berlinurbangradient-patchify.ipynb`](datasets/berlinurbangradient-patchify.ipynb) and create the split files using [`datasets/mlretset-split-creation.ipynb`](datasets/berlinurbangradient-split-creation.ipynb).
 
 #### MLRetSet
