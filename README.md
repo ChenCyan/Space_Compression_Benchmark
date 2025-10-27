@@ -1,17 +1,18 @@
 # Adjustable Spatio-Spectral Hyperspectral Image Compression Network
-This repository contains code of the paper [`Adjustable Spatio-Spectral Hyperspectral Image Compression Network`](https://arxiv.org/abs/2507.23447) accepted at IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing (Special Section: Al for Remote Sensing). This work has been done at the [Remote Sensing Image Analysis group](https://rsim.berlin/) by [Martin Hermann Paul Fuchs](https://rsim.berlin/team/members/martin-hermann-paul-fuchs), [Behnood Rasti](https://rsim.berlin/team/members/behnood-rasti) and [Begüm Demir](https://rsim.berlin/team/members/begum-demir).
+This repository contains code of the paper [`Adjustable Spatio-Spectral Hyperspectral Image Compression Network`](https://doi.org/10.1109/JSTARS.2025.3624884) accepted at IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing (JSTARS) in the Special Section: Al for Remote Sensing. This work has been done at the [Remote Sensing Image Analysis group](https://rsim.berlin/) by [Martin Hermann Paul Fuchs](https://rsim.berlin/team/members/martin-hermann-paul-fuchs), [Behnood Rasti](https://rsim.berlin/team/members/behnood-rasti) and [Begüm Demir](https://rsim.berlin/team/members/begum-demir).
 
 If you use this code, please cite our paper given below:
 
-> M. H. P. Fuchs, B. Rasti and B. Demіr, "[Adjustable Spatio-Spectral Hyperspectral Image Compression Network](https://arxiv.org/abs/2507.23447)", arXiv preprint arXiv:2507.23447 (2025).
+> M. H. P. Fuchs, B. Rasti and B. Demіr, "[Adjustable Spatio-Spectral Hyperspectral Image Compression Network](https://doi.org/10.1109/JSTARS.2025.3624884)", IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing (JSTARS), 2025.
 
 ```
 @article{fuchs2025adjustable,
-  title={Adjustable Spatio-Spectral Hyperspectral Image Compression Network},
   author={Fuchs, Martin Hermann Paul and Rasti, Behnood and Demir, Beg{\"u}m},
-  journal={arXiv preprint arXiv:2507.23447},
-  year={2025}
-}
+  title={Adjustable Spatio-Spectral Hyperspectral Image Compression Network},
+  journal={IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing},
+  year={2025},
+  pages={1-14},
+  doi={10.1109/JSTARS.2025.3624884}}
 ```
 This repository contains code that has been adapted from the CompressAI framework https://github.com/InterDigitalInc/CompressAI/.
 
