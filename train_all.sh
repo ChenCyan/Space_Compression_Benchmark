@@ -15,13 +15,13 @@ mkdir -p pretrained/berlin-dense
 MODELS_GPU0=(
   "hycass_cr004_spatial0x_n1024"
   "hycass_cr050_spatial0x_n1024"
-  "hycass_cr888_spatial2x_n128"
+  "hycass_cr101_spatial2x_n128"
 )
 
 MODELS_GPU1=(
   "hycass_cr016_spatial0x_n1024"
-  "hycass_cr202_spatial0x_n1024"
-  "hycass_cr222_spatial2x_n128"
+  "hycass_cr444_spatial2x_n128"
+  "hycass_cr888_spatial2x_n128"
 )
 
 train_model() {
