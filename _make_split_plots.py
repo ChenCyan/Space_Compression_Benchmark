@@ -16,9 +16,10 @@ rcParams.update({
 })
 
 DATA_DIR = "/data/cyl/space_compression/hycass"
-CSV_LOSSY = f"{DATA_DIR}/results/berlin_dense.csv"
-CSV_NEAR  = f"{DATA_DIR}/results/berlin_near_dense2.csv"
-CSV_LL    = f"{DATA_DIR}/results/berlin_full_final.csv"
+CSV_LOSSY    = f"{DATA_DIR}/results/berlin_dense.csv"
+CSV_NEAR     = f"{DATA_DIR}/results/berlin_near_dense2.csv"
+CSV_LL       = f"{DATA_DIR}/results/berlin_full_final.csv"
+CSV_JP2_HIGH = f"{DATA_DIR}/results/jpeg2000_high_cr.csv"
 OUT = f"{DATA_DIR}/results/plots"
 os.makedirs(OUT, exist_ok=True)
 
@@ -57,6 +58,8 @@ def load_data():
     rows = load_csv(CSV_NEAR, rows)
     rows = load_csv(CSV_LOSSY, rows)
     rows = load_csv(CSV_LL, rows)
+    if os.path.exists(CSV_JP2_HIGH):
+        rows = load_csv(CSV_JP2_HIGH, rows)
     for r in rows: r["_fam"] = family(r["method"])
     return rows
 
@@ -132,7 +135,7 @@ LL_M = ["lz4","zlib","ccsds123","jpegls_lossless","jpeg2000_lossless","klt_dwt_n
 def classify(m):
     if any(m == x or m.startswith(x) for x in LL_M): return "ll"
     if m.startswith("jpegls_ne"): return "near"
-    if m in ("jpeg2000_cr1.5","jpeg2000_cr2","jpeg2000_cr2.5","jpeg2000_cr3","jpeg2000_cr4"): return "near"
+    if m in ("jpeg2000_cr1.5","jpeg2000_cr2","jpeg2000_cr2.5","jpeg2000_cr3"): return "near"
     if m.startswith("klt_dwt") and "nc111" not in m:
         match = re.search(r"cr([\d.]+)", m)
         if match and float(match.group(1)) <= 2.0: return "near"
@@ -194,13 +197,14 @@ for idx,(key,ylab,logy,title) in enumerate([
     ("pae","PAE (DN)",True,"Lossy — CR vs PAE"),
     ("throughput_mbs","Throughput (MB/s)",True,"Lossy — CR vs Throughput"),
 ], start=5):
-    fig,ax=plt.subplots(figsize=(5.5,4.3))
+    fig,ax=plt.subplots(figsize=(6.5,4.5))
     fn = {"psnr":f_psnr}.get(key)
     plot_panel(ax,gy,key,ylab,log_y=logy,title=title,map_fn=fn,
-               label_override={"jpeg2000":"JPEG2000$_{cr \\geq 6}$",
+               label_override={"jpeg2000":"JPEG2000$_{MCT}$ (cr=4–500)",
                                "klt_dwt_nc28":"KLT+DWT$_{28}^{cr \\geq 4}$",
                                "klt_dwt_nc56":"KLT+DWT$_{56}^{cr \\geq 4}$",
                                "klt_dwt_nc111":"KLT+DWT$_{111}^{cr \\geq 2}$"})
+    ax.set_xlim(3, 1100)
     add_legend(ax,2); fig.tight_layout()
     tag = key.replace("throughput_mbs","throughput")
     fig.savefig(f"{OUT}/plt_lossy_{tag}.pdf"); plt.close(fig)
