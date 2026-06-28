@@ -123,3 +123,13 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Large data files (too big for GitHub)
+pretrained/
+datasets/berlin-urban-gradient/
+datasets/berlin_raw.zip
+*.zip
+*.mat
+
+# PDF outputs
+*.pdf

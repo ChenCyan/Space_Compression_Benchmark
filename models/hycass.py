@@ -184,12 +184,13 @@ class AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(nn.Module):
                  cr_target=202,
                  stages_spatial=2,
                  N=128,
+                 window_size=8,
                  ):
         super().__init__()
 
         depths = [2, 4, 6, 2, 2]
         num_heads = [4, 8, 16, 16, 16]
-        window_size = 8
+        window_size = window_size
         mlp_ratio = 4.
         qkv_bias = True
         qk_scale = None
