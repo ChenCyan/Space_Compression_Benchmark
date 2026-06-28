@@ -1,5 +1,16 @@
 # HyCASS Compression Benchmark
 
+## 操作规范
+
+1. **禁止修改项目代码以外的服务器内容**：不得修改系统配置、其他用户的文件、系统环境变量、Docker 镜像（除 `hycass-torch:*`）或任何与本项目无关的内容。
+2. **每次修改代码后必须提交 Git**：任何对项目文件的修改完成后，立即执行以下命令提交到 GitHub 仓库：
+   ```bash
+   cd /data/cyl/space_compression/hycass
+   git add -A
+   git commit -m "描述本次修改内容"
+   git push origin main
+   ```
+
 ## Project
 - **Location**: `/data/cyl/space_compression/hycass`
 - **Remote**: `ssh huaweiyun` → server 114.116.245.145, user `longjunyu`
