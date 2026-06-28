@@ -30,8 +30,9 @@ train_model() {
   echo "=========================================="
   echo "Training: $MODEL  GPU=$GPU"
   echo "=========================================="
+  # CUDA_VISIBLE_DEVICES 隔离物理卡，--devices 固定为 0（容器内视图只有一张）
   CUDA_VISIBLE_DEVICES=$GPU python3 train.py \
-    --devices $GPU \
+    --devices 0 \
     --dataset "$DATASET" \
     --model "$MODEL" \
     --epochs $EPOCHS \
