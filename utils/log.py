@@ -37,8 +37,13 @@ def log_epoch(writer, modus, epoch, loss, cr, bpppc, mse, psnr, sa, data_org, da
 
     plt.close(fig)
 
-    # r, g, b channels
-    idx_c = [44, 29, 11] if num_bands == 202 else [141, 81, 40]
+    # r, g, b channels — clamp to valid band indices
+    if num_bands == 202:
+        idx_c = [44, 29, 11]
+    elif num_bands >= 60:
+        idx_c = [60, 30, 10]
+    else:
+        idx_c = [min(44, num_bands-1), min(29, num_bands-1), min(11, num_bands-1)]
     # log original image batch
     writer.add_images(f"{modus}/_org", data_org[:, idx_c, :, :], epoch, dataformats='NCHW')
     # log reconstructed image batch

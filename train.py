@@ -45,6 +45,7 @@ from tqdm import tqdm
 from datasets.hyspecnet11k import HySpecNet11k
 from datasets.mlretset import MLRetSet
 from datasets.berlinurbangradient import BerlinUrbanGradient
+from datasets.berlindense import BerlinDense
 
 from losses import losses
 from metrics import metrics
@@ -344,17 +345,23 @@ def main(argv):
         train_dataset = MLRetSet(args.dataset, split="train", transform=torchvision.transforms.CenterCrop(96), random_subsample_factor=random_subsample_factor)
         num_channels = 369
         img_size = (96, 96)
+    elif "berlin-dense" in args.dataset:
+        train_dataset = BerlinDense(args.dataset, split="train")
+        num_channels = 111
+        img_size = (80, 80)
     elif "berlin-urban-gradient" in args.dataset:
         train_dataset = BerlinUrbanGradient(args.dataset, split="train", random_subsample_factor=random_subsample_factor)
         num_channels = 111
         img_size = (80, 80)
     else:
         raise ValueError(f"Invalid dataset: {args.dataset}")
-    
+
     if "hyspecnet-11k" in args.dataset:
         val_dataset = HySpecNet11k(args.dataset, split="val", mode=args.mode, transform=transform, random_subsample_factor=random_subsample_factor)
     elif "MLRetSet" in args.dataset:
         val_dataset = MLRetSet(args.dataset, split="val", transform=torchvision.transforms.CenterCrop(96), random_subsample_factor=random_subsample_factor)
+    elif "berlin-dense" in args.dataset:
+        val_dataset = BerlinDense(args.dataset, split="val")
     elif "berlin-urban-gradient" in args.dataset:
         val_dataset = BerlinUrbanGradient(args.dataset, split="val", random_subsample_factor=random_subsample_factor)
     else:
@@ -440,6 +447,8 @@ def main(argv):
         test_dataset = HySpecNet11k(args.dataset, split="test", mode=args.mode, transform=None)
     elif "MLRetSet" in args.dataset:
         test_dataset = MLRetSet(args.dataset, split="test", transform=torchvision.transforms.CenterCrop(96))
+    elif "berlin-dense" in args.dataset:
+        test_dataset = BerlinDense(args.dataset, split="test")
     elif "berlin-urban-gradient" in args.dataset:
         test_dataset = BerlinUrbanGradient(args.dataset, split="test", transform=None)
     else:
@@ -496,7 +505,7 @@ def parse_args(argv):
         "--dataset",
         type=str,
         default="./datasets/hyspecnet-11k/",
-        choices=["./datasets/hyspecnet-11k/", "./datasets/MLRetSet/", "./datasets/berlin-urban-gradient/"],
+        choices=["./datasets/hyspecnet-11k/", "./datasets/MLRetSet/", "./datasets/berlin-urban-gradient/", "./datasets/berlin-dense/"],
         help="Path to dataset (default: %(default)s)"
     )
     parser.add_argument(
