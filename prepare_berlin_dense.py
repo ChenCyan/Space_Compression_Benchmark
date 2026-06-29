@@ -25,11 +25,9 @@ with rasterio.open(SRC) as src:
 C, H, W = cube.shape
 print(f"Raster: {C} bands x {H} x {W}")
 
-# 归一化：每波段用全图 1–99 百分位
-print("Normalizing...")
-lo = np.percentile(cube, 1, axis=(1, 2), keepdims=True)
-hi = np.percentile(cube, 99, axis=(1, 2), keepdims=True)
-cube = np.clip((cube - lo) / (hi - lo + 1e-6), 0.0, 1.0)
+# 归一化：与原始 Berlin 数据集一致，使用 DN / 10000
+print("Normalizing (dn / 10000)...")
+cube = cube / 10000.0
 
 # 切 patch
 patch_names = []
@@ -37,7 +35,7 @@ idx = 0
 print("Cutting patches...")
 for r in range(0, H - PATCH + 1, STRIDE):
     for c in range(0, W - PATCH + 1, STRIDE):
-        patch = cube[:, r:r + PATCH, c:c + PATCH]
+        patch = cube[:, r:r + PATCH, c:c + PATCH].astype(np.float32)
         name = f"{idx:04d}.npy"
         np.save(os.path.join(OUT, "patches", name), patch)
         patch_names.append(name)
