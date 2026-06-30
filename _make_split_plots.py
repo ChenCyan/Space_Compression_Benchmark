@@ -17,6 +17,7 @@ rcParams.update({
 
 DATA_DIR = "/data/cyl/space_compression/hycass"
 CSV_LOSSY    = f"{DATA_DIR}/results/berlin_dense.csv"
+CSV_DENSE_BENCH = f"{DATA_DIR}/results/berlin_dense_bench.csv"
 CSV_NEAR     = f"{DATA_DIR}/results/berlin_near_dense2.csv"
 CSV_LL       = f"{DATA_DIR}/results/berlin_full_final.csv"
 CSV_JP2_HIGH = f"{DATA_DIR}/results/jpeg2000_high_cr.csv"
@@ -57,6 +58,8 @@ def load_data():
     rows = []
     rows = load_csv(CSV_NEAR, rows)
     rows = load_csv(CSV_LOSSY, rows)
+    if os.path.exists(CSV_DENSE_BENCH):
+        rows = load_csv(CSV_DENSE_BENCH, rows)
     rows = load_csv(CSV_LL, rows)
     if os.path.exists(CSV_JP2_HIGH):
         rows = load_csv(CSV_JP2_HIGH, rows)

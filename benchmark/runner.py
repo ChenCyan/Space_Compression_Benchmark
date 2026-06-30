@@ -11,7 +11,7 @@ from benchmark.domain import Domain, DEFAULT_DOMAIN
 from benchmark.metrics_unified import all_metrics
 
 
-def _parse_codec_spec(spec: str, domain: Domain) -> Codec:
+def _parse_codec_spec(spec: str, domain: Domain, pretrained_dir: str = "pretrained/berlin-urban-gradient") -> Codec:
     parts = spec.split("_")
     if parts[0] == "jpeg2000":
         # Optional trailing _th{N} for OpenJPEG >= 2.4.0 code-block threading.
@@ -47,7 +47,7 @@ def _parse_codec_spec(spec: str, domain: Domain) -> Codec:
     LEARNED = ["hycass", "cae1d", "cae3d", "sscnet", "hycot"]
     if any(parts[0] == p for p in LEARNED) and HyCASSCodec is not None:
         ckpt = os.environ.get("HYCASS_CHECKPOINT",
-               f"pretrained/berlin-urban-gradient/{spec}.pth.tar")
+               os.path.join(pretrained_dir, f"{spec}.pth.tar"))
         if not os.path.exists(ckpt): ckpt = None
         return HyCASSCodec(model_name=spec, checkpoint_path=ckpt, domain=domain)
     raise ValueError(f"Unknown codec spec: {spec!r}")
@@ -165,29 +165,33 @@ if __name__ == "__main__":
     import argparse
     sys.path.insert(0, os.path.join(os.path.dirname(__file__),".."))
     from datasets.berlinurbangradient import BerlinUrbanGradient
+    from datasets.berlindense import BerlinDense
     from datasets.hyspecnet11k import HySpecNet11k
     from datasets.npy_patch_dataset import NumpyPatchDataset
     ap = argparse.ArgumentParser()
     ap.add_argument("--dataset","-d",required=True)
     ap.add_argument("--dataset-type",default="berlin",
-                    choices=["berlin","hyspecnet11k","generic"])
+                    choices=["berlin","berlin-dense","hyspecnet11k","generic"])
     ap.add_argument("--codecs",nargs="+",required=True)
     ap.add_argument("--output","-o",default="results/benchmark.csv")
     ap.add_argument("--max-samples",type=int,default=0)
     ap.add_argument("--warmup",type=int,default=2)
     ap.add_argument("--workers","-w",type=int,default=0,help="Parallel workers for CPU (0=auto)")
+    ap.add_argument("--pretrained-dir",default="pretrained/berlin-urban-gradient",help="Directory for learned model checkpoints")
     args = ap.parse_args()
     if args.workers == 0: args.workers = int(os.environ.get("BENCH_WORKERS", "0"))
     print("Loading %s from %s ..." % (args.dataset_type, args.dataset))
     if args.dataset_type == "generic":
         ds = NumpyPatchDataset(args.dataset, split="test")
+    elif args.dataset_type == "berlin-dense":
+        ds = BerlinDense(args.dataset, split="test")
     elif args.dataset_type == "berlin":
         ds = BerlinUrbanGradient(args.dataset, split="test")
     else:
         ds = HySpecNet11k(args.dataset, split="test", mode="easy")
     print("Dataset size: %d samples" % len(ds))
     domain = Domain.from_data_dir(args.dataset) if args.dataset_type == "generic" else DEFAULT_DOMAIN
-    cl = [_parse_codec_spec(s, domain) for s in args.codecs]
+    cl = [_parse_codec_spec(s, domain, pretrained_dir=args.pretrained_dir) for s in args.codecs]
     for c in cl: print("  %s [%s] dev=%s" % (c.name, c.family, c.device))
     rows = run_benchmark(cl, ds, max_samples=args.max_samples, warmup_samples=args.warmup, workers=args.workers)
     save_csv(rows, args.output)
