@@ -58,8 +58,6 @@ def load_data():
     rows = []
     rows = load_csv(CSV_NEAR, rows)
     rows = load_csv(CSV_LOSSY, rows)
-    if os.path.exists(CSV_DENSE_BENCH):
-        rows = load_csv(CSV_DENSE_BENCH, rows)
     rows = load_csv(CSV_LL, rows)
     if os.path.exists(CSV_JP2_HIGH):
         rows = load_csv(CSV_JP2_HIGH, rows)
