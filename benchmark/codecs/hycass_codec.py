@@ -100,6 +100,7 @@ class HyCASSCodec(Codec):
         self.arch_cr = float(getattr(model, "compression_ratio", float("nan")))
         self.bpppc = float(getattr(model, "bpppc", float("nan")))
         self.name = model_name  # e.g. "cae1d_cr004" or "hycass_cr222_spatial2x_n128"
+        self.domain = Domain(bit_depth=domain.bit_depth, dn_scale=domain.dn_scale, bitdepth_native=32)
 
     def operating_point(self) -> str:
         return f"archCR={self.arch_cr:.1f}"
