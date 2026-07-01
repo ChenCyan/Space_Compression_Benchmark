@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+from torch.utils.checkpoint import checkpoint as activation_checkpoint
 
 from timm.layers import trunc_normal_
 
@@ -176,6 +177,78 @@ def hycass_cr1776_spatial2x_n128(src_channels=111, img_size=(80, 80)):
 def hycass_cr1776_spatial3x_n128(src_channels=111, img_size=(80, 80)):
     return AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(src_channels, img_size, cr_target=1_776, stages_spatial=3, N=128)
 
+class Residual1DSpectralUnit(nn.Module):
+    def __init__(self, channels: int):
+        super().__init__()
+        self.block = nn.Sequential(
+            nn.Conv1d(channels, channels, kernel_size=3, padding=1),
+            nn.GELU(),
+            nn.Conv1d(channels, channels, kernel_size=3, padding=1),
+        )
+        self.act = nn.GELU()
+
+    def forward(self, x):
+        return self.act(x + self.block(x))
+
+
+class Residual1DSpectralBlock(nn.Module):
+    """Per-pixel residual 1D spectral block.
+
+    Input/Output shape: (B, C_in/C_out, H, W). The spatial dimensions are
+    unchanged; each pixel spectrum is processed as a 1D sequence.
+    """
+
+    def __init__(
+        self,
+        in_ch: int,
+        out_ch: int,
+        hidden: int = 64,
+        num_blocks: int = 2,
+        act_out=None,
+        chunk_size: int = 256,
+    ):
+        super().__init__()
+        self.stem = nn.Sequential(
+            nn.Conv1d(1, hidden, kernel_size=3, padding=1),
+            nn.GELU(),
+        )
+        self.blocks = nn.Sequential(*[
+            Residual1DSpectralUnit(hidden)
+            for _ in range(num_blocks)
+        ])
+        self.tail = nn.Conv1d(hidden, 1, kernel_size=3, padding=1)
+        self.proj = nn.Linear(in_ch, out_ch)
+        self.act_out = act_out
+        self.chunk_size = chunk_size
+
+    def _forward_flat(self, x_flat):
+        h = x_flat.unsqueeze(1)
+        h = self.stem(h)
+        h = self.blocks(h)
+        h = self.tail(h).squeeze(1)
+        h = h + x_flat
+        return self.proj(h)
+
+    def forward(self, x):
+        B, C, H, W = x.shape
+        x_flat = x.permute(0, 2, 3, 1).reshape(B * H * W, C)
+        if x_flat.shape[0] > self.chunk_size:
+            out = torch.cat([
+                activation_checkpoint(
+                    self._forward_flat,
+                    x_flat[i:i + self.chunk_size],
+                    use_reentrant=False,
+                )
+                if self.training and x_flat.requires_grad else
+                self._forward_flat(x_flat[i:i + self.chunk_size])
+                for i in range(0, x_flat.shape[0], self.chunk_size)
+            ], dim=0)
+        else:
+            out = self._forward_flat(x_flat)
+        out = out.reshape(B, H, W, -1).permute(0, 3, 1, 2)
+        if self.act_out is not None:
+            out = self.act_out(out)
+        return out
 
 class AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(nn.Module):
     def __init__(self,
@@ -185,6 +258,7 @@ class AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(nn.Module):
                  stages_spatial=2,
                  N=128,
                  window_size=8,
+                 spectral='conv',
                  ):
         super().__init__()
 
@@ -212,10 +286,17 @@ class AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(nn.Module):
         self.compression_ratio = compression_ratio_spectral * compression_ratio_spatial
         self.bpppc = 32 / self.compression_ratio
 
+        if spectral == 'residual1d':
+            _spec_enc = Residual1DSpectralBlock(in_ch=src_channels, out_ch=N, act_out=nn.LeakyReLU())
+            _spec_enc_act = nn.Identity()
+        else:
+            _spec_enc = nn.Conv2d(in_channels=src_channels, out_channels=N, kernel_size=1, stride=1, padding="same")
+            _spec_enc_act = nn.LeakyReLU()
+
         self.encoder = nn.Sequential(
             # Spectral Encoder Module
-            nn.Conv2d(in_channels=src_channels, out_channels=N, kernel_size=1, stride=1, padding="same"),
-            nn.LeakyReLU(),
+            _spec_enc,
+            _spec_enc_act,
             # Spatial Encoder Module
             nn.Sequential(*[
                 nn.Sequential(*[
@@ -281,8 +362,10 @@ class AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(nn.Module):
                 for i in range(stages_spatial)[::-1]
             ]),
             # Spectral Decoder Module
+            Residual1DSpectralBlock(in_ch=N, out_ch=src_channels, act_out=nn.Sigmoid())
+            if spectral == 'residual1d' else
             nn.Conv2d(in_channels=N, out_channels=src_channels, kernel_size=1, stride=1, padding="same"),
-            nn.Sigmoid(),
+            nn.Identity() if spectral == 'residual1d' else nn.Sigmoid(),
         )
 
         self.apply(self._init_weights)
@@ -879,6 +962,28 @@ class RSTB(nn.Module):
 
         return flops
 
+def hycass_res_cr004_spatial0x_n1024(src_channels=111, img_size=(80, 80)):
+    return AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(src_channels, img_size, cr_target=4, stages_spatial=0, N=1024, spectral='residual1d')
+
+
+def hycass_res_cr016_spatial0x_n1024(src_channels=111, img_size=(80, 80)):
+    return AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(src_channels, img_size, cr_target=15.538, stages_spatial=0, N=1024, spectral='residual1d')
+
+
+def hycass_res_cr050_spatial0x_n1024(src_channels=111, img_size=(80, 80)):
+    return AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(src_channels, img_size, cr_target=50, stages_spatial=0, N=1024, spectral='residual1d')
+
+
+def hycass_res_cr101_spatial2x_n128(src_channels=111, img_size=(80, 80)):
+    return AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(src_channels, img_size, cr_target=101, stages_spatial=2, N=128, spectral='residual1d')
+
+
+def hycass_res_cr444_spatial2x_n128(src_channels=111, img_size=(80, 80)):
+    return AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(src_channels, img_size, cr_target=444, stages_spatial=2, N=128, spectral='residual1d')
+
+
+def hycass_res_cr888_spatial2x_n128(src_channels=111, img_size=(80, 80)):
+    return AdjustableSpatioSpectralHyperspectralImageCompressionNetwork(src_channels, img_size, cr_target=888, stages_spatial=2, N=128, spectral='residual1d')
 
 if __name__ == '__main__':
     import torch

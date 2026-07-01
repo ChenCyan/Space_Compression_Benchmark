@@ -141,4 +141,11 @@ models = {
     "hycass_cr1776_spatial2x_n128": hycass.hycass_cr1776_spatial2x_n128,
     "hycass_cr1776_spatial3x_n128": hycass.hycass_cr1776_spatial3x_n128,
 
+    # --- HYCASS-RES1D ---
+    "hycass_res_cr004_spatial0x_n1024": hycass.hycass_res_cr004_spatial0x_n1024,
+    "hycass_res_cr016_spatial0x_n1024": hycass.hycass_res_cr016_spatial0x_n1024,
+    "hycass_res_cr050_spatial0x_n1024": hycass.hycass_res_cr050_spatial0x_n1024,
+    "hycass_res_cr101_spatial2x_n128": hycass.hycass_res_cr101_spatial2x_n128,
+    "hycass_res_cr444_spatial2x_n128": hycass.hycass_res_cr444_spatial2x_n128,
+    "hycass_res_cr888_spatial2x_n128": hycass.hycass_res_cr888_spatial2x_n128,
 }
